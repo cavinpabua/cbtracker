@@ -4,9 +4,9 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+// const fs = require('fs');
 const http = require('http');
-const https = require('https');
+// const https = require('https');
 
 const app = express();
 
@@ -57,9 +57,11 @@ app.use((err, req, res, next) => {
 
 
 const httpServer = http.createServer(app);
+
 const httpPort = process.env.PORT || 8080;
 httpServer.listen(httpPort, () => {
   console.log(`HTTP Server running on port ${httpPort}`);
 });
+
 
 module.exports = app;
