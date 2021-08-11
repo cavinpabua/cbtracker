@@ -645,6 +645,10 @@ function copy_address_to_clipboard() {
   navigator.clipboard.writeText('0x2548696795a3bCd6A8fAe7602fc26DD95A612574').then(n => alert("Copied Address"),e => alert("Fail\n" + e));
 }
 
+function copy_gcp_address_to_clipboard() {
+  navigator.clipboard.writeText('0x266f0D109b6cAA36e6c2f43F03b9e26748046864').then(n => alert("Copied Address"),e => alert("Fail\n" + e));
+}
+
 function unstakeSkillAt(timeLeft){
   const timeLeftTimestamp = new Date(new Date().getTime() + (timeLeft * 1000))
   return `<span title="${moment().countdown(timeLeftTimestamp)}">${moment(timeLeftTimestamp).fromNow()}`;
