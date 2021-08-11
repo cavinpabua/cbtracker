@@ -176,8 +176,7 @@ function getAlignedCharacterPower(charData, weapData) {
   const characterPower = CharacterPower(charData.level);
   const playerElement = parseInt(charData.trait, 10);
   const weaponMultiplier = GetTotalMultiplierForTrait(weapData, playerElement);
-  const totalPower = (characterPower * weaponMultiplier) + weapData.bonusPower;
-  return totalPower;
+  return (characterPower * weaponMultiplier) + weapData.bonusPower;
 }
 
 function getWinChance(charData, weapData, enemyPower, enemyElement) {
@@ -261,7 +260,7 @@ const experienceTable = [
     28978,
 ];
 
-function getNextTargetExpLevel(level) {    
+function getNextTargetExpLevel(level) {
     let next = (Math.floor(level / 10) + 1) * 10;
     if (next === level) {
         next = level + 11

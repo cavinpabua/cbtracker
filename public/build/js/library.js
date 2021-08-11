@@ -20,10 +20,6 @@ const conOracle = new web3.eth.Contract(BasicPriceOracle, oracleAddress);
 const isAddress = address => web3.utils.isAddress(address);
 const getBNBBalance = address => web3.eth.getBalance(address);
 const fromEther = (value) => web3.utils.fromWei(BigInt(value).toString(), 'ether');
-
-const getRewardsPoolBalance = () => conStakingToken.methods.balanceOf(mainAddress).call({ from: defaultAddress });
-const getStakingPoolBalance = () => conStakingToken.methods.balanceOf(stakingRewardAddress).call({ from: defaultAddress });
-
 const getStakedBalance = address => conStakingToken.methods.balanceOf(address).call({ from: defaultAddress });
 const getStakedRewards = address => conStakingReward.methods.balanceOf(address).call({ from: defaultAddress });
 const getStakedTimeLeft = address => conStakingReward.methods.getStakeUnlockTimeLeft().call({ from: address });
@@ -42,13 +38,13 @@ const getOraclePrice = () => conOracle.methods.currentPrice().call({ from: defau
 const fetchFightGasOffset = async () => conCryptoBlades.methods.fightRewardGasOffset().call({ from: defaultAddress });
 const fetchFightBaseline = async () => conCryptoBlades.methods.fightRewardBaseline().call({ from: defaultAddress });
 const usdToSkill = async value => conCryptoBlades.methods.usdToSkill(value).call({ from: defaultAddress });
-const decodeAbi = (types, data) => web3.eth.abi.decodeParameters(types, data);
 const getPastLogs = options => web3.eth.getPastLogs(options);
 const getLatestBlock = async () =>  web3.eth.getBlock('latest')
 const getPastEvents = async (event, fromBlock, toBlock, address, topics) =>  conCryptoBlades.getPastEvents(event, {fromBlock, toBlock, address, topics})
 const getTransaction = async hash => web3.eth.getTransaction(hash)
 const getTransactionReceipt = async hash => web3.eth.getTransactionReceipt(hash)
 const getFinalPrice = async (contract, tokenId) => conMarket.methods.getFinalPrice(contract, tokenId).call({ from: defaultAddress })
+
 const randomString = (length) => {
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHUJKLMNOPQRSTUVWXYZ';
     let result = '';
@@ -227,8 +223,7 @@ function getAlignedCharacterPower(charData, weapData) {
   const characterPower = CharacterPower(charData.level);
   const playerElement = parseInt(charData.trait, 10);
   const weaponMultiplier = GetTotalMultiplierForTrait(weapData, playerElement);
-  const totalPower = (characterPower * weaponMultiplier) + weapData.bonusPower;
-  return totalPower;
+  return (characterPower * weaponMultiplier) + weapData.bonusPower;
 }
 
 function getWinChance(charData, weapData, enemyPower, enemyElement) {
@@ -312,7 +307,7 @@ const experienceTable = [
     28978,
 ];
 
-function getNextTargetExpLevel(level) {    
+function getNextTargetExpLevel(level) {
     let next = (Math.floor(level / 10) + 1) * 10;
     if (next === level) {
         next = level + 11

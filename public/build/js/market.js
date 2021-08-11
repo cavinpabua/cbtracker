@@ -1,4 +1,4 @@
-var $table = $('#table-weapons tbody')
+const $table = $('#table-weapons tbody');
 
 async function loadWeaponListing() {
     $('.btn-refresh').prop('disabled', true)
@@ -14,13 +14,13 @@ async function loadWeaponListing() {
                         stars += '<img class="me-1" src="/img/star.svg" alt="Star" width="20">';
                     }
                     if (weapData.stat1Value > 0) {
-                        attr += `<img class="me-1" src="/img/${traitToIcon(weapData.stat1Type)}" width="20">${weapData.stat1} +${weapData.stat1Value}`;
+                        attr += `<img class="me-1" src="/img/${traitToIcon(weapData.stat1Type)}" width="20" alt="trait">${weapData.stat1} +${weapData.stat1Value}`;
                     }
                     if (weapData.stat2Value > 0) {
-                        attr += `<br><img class="me-1" src="/img/${traitToIcon(weapData.stat2Type)}" width="20">${weapData.stat2} +${weapData.stat2Value}`;
+                        attr += `<br><img class="me-1" src="/img/${traitToIcon(weapData.stat2Type)}" width="20" alt="trait2">${weapData.stat2} +${weapData.stat2Value}`;
                     }
                     if (weapData.stat3Value > 0) {
-                        attr += `<br><img class="me-1" src="/img/${traitToIcon(weapData.stat3Type)}" width="20">${weapData.stat3} +${weapData.stat3Value}`;
+                        attr += `<br><img class="me-1" src="/img/${traitToIcon(weapData.stat3Type)}" width="20" alt="trait3">${weapData.stat3} +${weapData.stat3Value}`;
                     }
                     if (weapData.bonusPower > 0) {
                         attr += `<br>BONUS +${weapData.bonusPower}`;
@@ -77,8 +77,8 @@ function traitToIcon(traitNum) {
 }
 
 function sortTable() {
-    var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("table-weapons");
+  let table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("table-weapons");
     switching = true;
     while (switching) {
         switching = false;

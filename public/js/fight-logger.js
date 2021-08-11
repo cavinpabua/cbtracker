@@ -11,8 +11,8 @@ async function subscribe (address) {
     subs[address] = setInterval(async() => {
         try {
             const latestBlock = await getLatestBlock()
-            const results = await getPastEvents('FightOutcome',   
-                latestBlock.number-5,        
+            const results = await getPastEvents('FightOutcome',
+                latestBlock.number-5,
                 latestBlock.number,
                 '0x39bea96e13453ed52a734b6aceed4c41f57b2271',
                 ['0x7a58aac6530017822bf3210fccef7efa31f56277f19966bc887bfb11f40ca96d',
@@ -48,25 +48,25 @@ async function subscribe (address) {
 }
 
 async function addAccount() {
-    var address = $('#logger-address').val().trim()
-    if (!Object.keys(subs).includes(address) && isAddress(address)) {
-        await subscribe(address)        
+  const address = $('#logger-address').val().trim();
+  if (!Object.keys(subs).includes(address) && isAddress(address)) {
+        await subscribe(address)
         fightAddress.append(`${address}\n`)
         $('#modal-add-account').modal('hide')
     }
 }
 
 function exportList() {
-    var list = fightAddress.val().split('\n')
-    list.splice(list.length-1, 1)
+  const list = fightAddress.val().split('\n');
+  list.splice(list.length-1, 1)
     if (list.length > 0) {
-        var textToSave = list.join('\n')
-        var textToSaveAsBlob = new Blob([textToSave], {
-            type: "text/plain"
-        });
-        var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-        var downloadLink = document.createElement("a");
-        downloadLink.download = `CBTracker-Address-List-${new Date().getTime()}.txt`;
+      const textToSave = list.join('\n');
+      const textToSaveAsBlob = new Blob([textToSave], {
+        type: "text/plain"
+      });
+      let textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+      const downloadLink = document.createElement("a");
+      downloadLink.download = `CBTracker-Address-List-${new Date().getTime()}.txt`;
         downloadLink.innerHTML = "Download File";
         downloadLink.href = textToSaveAsURL;
         downloadLink.onclick = function () {
@@ -80,13 +80,13 @@ function exportList() {
 
 function exportLogs() {
     if (fightLogs.length > 0) {
-        var textToSave = fightLogs.join('\n')
-        var textToSaveAsBlob = new Blob([textToSave], {
-            type: "text/plain"
-        });
-        var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-        var downloadLink = document.createElement("a");
-        downloadLink.download = `CBTracker-Fight-Logs-${new Date().getTime()}.txt`;
+      const textToSave = fightLogs.join('\n');
+      const textToSaveAsBlob = new Blob([textToSave], {
+        type: "text/plain"
+      });
+      const textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+      const downloadLink = document.createElement("a");
+      downloadLink.download = `CBTracker-Fight-Logs-${new Date().getTime()}.txt`;
         downloadLink.innerHTML = "Download File";
         downloadLink.href = textToSaveAsURL;
         downloadLink.onclick = function () {
@@ -103,8 +103,8 @@ function importList() {
         return alert('The File APIs are not fully supported in this browser.');
     }
 
-    var input = document.getElementById('file-import');
-    if (!input) {
+  const input = document.getElementById('file-import');
+  if (!input) {
         return alert("Um, couldn't find the fileinput element.");
     }
     if (!input.files) {
@@ -113,18 +113,18 @@ function importList() {
     if (!input.files[0]) {
         return alert("Please select a file before clicking 'Import'");
     }
-    var fileType = input.files[0].type
-    if (fileType === 'text/plain') {
-        var file = input.files[0];
-        var fr = new FileReader();
-        fr.readAsText(file);
+  const fileType = input.files[0].type;
+  if (fileType === 'text/plain') {
+      const file = input.files[0];
+      const fr = new FileReader();
+      fr.readAsText(file);
         fr.addEventListener('load', function () {
-            var rows = fr.result.split('\n')
-            rows = rows.map(row => row.replace(/\r?\n|\r/g, ''))
+          let rows = fr.result.split('\n');
+          rows = rows.map(row => row.replace(/\r?\n|\r/g, ''))
             if (rows.length) {
                 rows.forEach(async address => {
                     if (!Object.keys(subs).includes(address) && isAddress(address)) {
-                        await subscribe(address)        
+                        await subscribe(address)
                         fightAddress.append(`${address}\n`)
                     }
                 })
