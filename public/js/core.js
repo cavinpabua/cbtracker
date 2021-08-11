@@ -88,6 +88,11 @@ async function refreshTimer() {
 
 }
 
+async function refreshLoadOnly() {
+  loadData()
+  fiatConversion()
+}
+
 async function refresh () {
   await loadData()
   refreshTimer()
@@ -287,7 +292,7 @@ function addAccount() {
     storeNames[address] = name
     if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
     if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
-    refresh()
+    refreshLoadOnly()
   }
 }
 
@@ -423,7 +428,7 @@ function remove(address) {
   delete storeNames[address]
   if (storeAccounts) localStorage.setItem('accounts', JSON.stringify(storeAccounts))
   if (storeNames) localStorage.setItem('names', JSON.stringify(storeNames))
-  refresh()
+  refreshLoadOnly()
 }
 
 async function simulate(address) {
@@ -574,7 +579,7 @@ function import_data() {
       if (currCurrency) localStorage.setItem('currency', currCurrency)
 
       toggleHelper(hideAddress)
-      refresh()
+      refreshLoadOnly()
 
       $('#modal-import').modal('hide')
     });
@@ -649,14 +654,14 @@ function unstakeSkillAt(timeLeft){
 $('#btn-privacy').on('change', (e) => {
   hideAddress = e.currentTarget.checked
   localStorage.setItem('hideAddress', hideAddress)
-  refresh()
+  refreshLoadOnly()
 })
 
 $("#btn-tax").on('change', (e) => {
   includeClaimTax = e.currentTarget.checked
   localStorage.setItem('includeClaimTax', includeClaimTax)
   clearFiat()
-  refresh()
+  refreshLoadOnly()
 })
 
 $("#select-currency").on('change', (e) => {
@@ -665,7 +670,7 @@ $("#select-currency").on('change', (e) => {
   clearFiat()
   priceTicker()
   populateCurrency()
-  refresh()
+  refreshLoadOnly()
 })
 
 
